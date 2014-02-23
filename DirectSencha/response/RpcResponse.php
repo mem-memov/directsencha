@@ -1,6 +1,6 @@
 <?php
 namespace DirectSencha\response;
-class Rpc {
+class RpcResponse {
     
     public function __construct() {
         

@@ -28,18 +28,35 @@ class Facade {
         $api = api\Factory::getInstance()->makeApi(
             input\Factory::getInstance()->makeApiDirectory($apiDirectory)
         );
-        
-        $output = response\Factory::getInstance()->makeOutput();
-        
+
         foreach ($requests as $request) {
             
-            $action = action\Factory::getInstance()->makeAction($request, $api);
+            $action = $request->makeAction(
+                action\Factory::getInstance(),
+                $api
+            );
             
-            $action->tryToRun($output);
+            if (!isset($output)) {
+                
+                $output = $request->makeOutput(
+                    output\Factory::getInstance(),
+                    response\Factory::getInstance()
+                );
+                
+            }
+            
+            $output->addResponse($action);
             
         }
         
-        return $output;
+        if (!isset($output)) {
+            $output = output\Factory::getInstance()->makeDefaultOutput();
+        }
+        
+        return array(
+            'headers' => $output->getHeaders(),
+            'content' => $output->getContent()
+        );
         
     }
     

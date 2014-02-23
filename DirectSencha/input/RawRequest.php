@@ -38,37 +38,31 @@ implements
         
     }
     
-    public function getRowsWithKeys(array $defaultValues) {
-        
-        $resultRows = array();
-        
-        foreach ($this->data as $row) {
-            
-            if (!is_array($row)) {
-                return array();
-            }
-            
-            $resultRow = array();
+    public function getRow($index, array $defaultValues) {
 
-            foreach ($defaultValues as $key => $defaultValue) {
-                
-                if (!array_key_exists($key, $row)) {
-                    
-                    $resultRow[$key] = $defaultValue;
-                    
-                } else {
-                    
-                    $resultRow[$key] = $row[$key];
-                    
-                }
-                
-            }
-            
-            $resultRows[] = $resultRow;
-            
+        if (!is_array($this->data[$index])) {
+            throw new RawRequestHasNoRowAtIndex('No request with index '.$index);
         }
-        
-        return $resultRows;
+
+        $row =  $this->data[$index];
+
+        $resultRow = array();
+
+        foreach ($defaultValues as $key => $defaultValue) {
+
+            if (!array_key_exists($key, $row)) {
+
+                $resultRow[$key] = $defaultValue;
+
+            } else {
+
+                $resultRow[$key] = $row[$key];
+
+            }
+
+        }
+
+        return $resultRow;
         
     }
     

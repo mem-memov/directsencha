@@ -1,6 +1,9 @@
 <?php
 namespace DirectSencha\api;
-class Api {
+class Api 
+implements
+    \DirectSencha\request\IApi
+{
     
     private $map;
     

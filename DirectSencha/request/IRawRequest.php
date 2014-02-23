@@ -4,6 +4,6 @@ interface IRawRequest {
     
     public function hasKeyInRows($key);
     
-    public function getRowsWithKeys(array $defaultValues);
+    public function getRow($index, array $defaultValues);
     
 }

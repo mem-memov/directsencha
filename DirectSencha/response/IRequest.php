@@ -1,8 +1,6 @@
 <?php
-namespace DirectSencha\action;
+namespace DirectSencha\response;
 interface IRequest {
-    
-    public function makeAction();
     
     public function getTransactionId();
     

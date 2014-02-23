@@ -1,6 +1,9 @@
 <?php
 namespace DirectSencha\response;
-class Factory {
+class Factory 
+implements
+    \DirectSencha\action\IResponseFactory
+{
     
     protected static $instance;
     
@@ -22,9 +25,15 @@ class Factory {
         
     }
     
-    public function makeOutput() {
+    public function makeExceptionMessage(IRequest $request, IException $exception) {
         
-        return new Output();
+        return new ExceptionMessage($request, $exception);
+        
+    }
+    
+    public function makeRpcResponse() {
+        
+        return new RpcResponse();
         
     }
     

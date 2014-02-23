@@ -1,8 +1,8 @@
 <?php
-namespace DirectSencha\action;
+namespace DirectSencha\output;
 class Factory 
 implements
-    \DirectSencha\request\IActionFactory
+    \DirectSencha\request\IOutputFactory
 {
     
     protected static $instance;
@@ -11,7 +11,7 @@ implements
     
     /**
      * Get the single factory instance
-     * @return \DirectSencha\action\Factory
+     * @return \DirectSencha\output\Factory
      */
     public static function getInstance() {
         
@@ -25,15 +25,21 @@ implements
         
     }
     
-    public function makeFormAction(IRequest $request, IApi $api) {
+    public function makeFormOutput(IResponseFactory $responseFactory) {
         
-        
+        return new FormOutput($responseFactory);
         
     }
     
-    public function makeBatchAction(IRequest $request, IApi $api) {
+    public function makeBatchOutput(IResponseFactory $responseFactory) {
         
+        return new BatchOutput($responseFactory);
         
+    }
+    
+    public function makeDefaultOutput() {
+        
+        return new DefaultOutput();
         
     }
     

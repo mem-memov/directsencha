@@ -22,4 +22,44 @@ implements
         
     }
     
+    public function getValuesUsingDefaults(array $defaultValues) {
+
+        $values = array();
+
+        foreach ($defaultValues as $key => $defaultValue) {
+
+            if (!array_key_exists($key, $this->post)) {
+
+                $values[$key] = $defaultValue;
+
+            } else {
+
+                $values[$key] = $this->post[$key];
+
+            }
+
+        }
+
+        return $values;
+        
+    }
+    
+    public function getValuesSkippingKeys(array $skippedKeys) {
+        
+        $values = array();
+
+        foreach ($this->post as $key => $value) {
+
+            if (!in_array($key, $skippedKeys)) {
+
+                $values[$key] = $value;
+
+            }
+
+        }
+
+        return $values;
+        
+    }
+    
 }

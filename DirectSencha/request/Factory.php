@@ -31,7 +31,7 @@ class Factory {
         IFiles $files
     ) {
 
-        if ($post->has('extType')) {
+        if ($post->has('extTID')) {
             
             return array($this->makeFormRequest($post, $files));
             
@@ -48,26 +48,10 @@ class Factory {
     private function makeBatchRequests(IRawRequest $rawRequest) {
         
         $requests = array();
-        
-        $rpcDefaults = array(
-            'type' => '', // request type
-            'action' => '', // class name
-            'method' => '', // method name
-            'data' => array(), // parameter array
-            'tid' => '' // request ID
-        );
-        
-        $rows = $rawRequest->getRowsWithKeys($rpcDefaults);
-        
-        foreach ($rows as $row) {
+
+        foreach ($rows as $rowIndex => $row) {
             
-            $requests[] = new Batch(
-                $row['tid'],
-                $row['action'],
-                $row['method'],
-                $row['data'],
-                $row['type']
-            );
+            $requests[] = new BatchRequest($rawRequest, $rowIndex);
             
         }
         
@@ -77,7 +61,7 @@ class Factory {
     
     private function makeFormRequest(IPost $post, IFiles $files) {
         
-        return new Form($post, $files);
+        return new FormRequest($post, $files);
         
     }
     
